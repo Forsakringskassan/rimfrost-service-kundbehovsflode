@@ -1,68 +1,99 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.service.impl;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovCreateResponse;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovGetResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovCreateRequest;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovCreateResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovGetRequest;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovGetResponse;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableIndividEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableKundbehovEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableKundbehovsrollEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutablePeriodEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.IndividEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.KundbehovEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.KundbehovsrollEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.PeriodEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.enums.AvsiktEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.enums.KundbehovsstatusEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.enums.RollEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.repository.KundbehovRepository;
 import se.fk.github.rimfrost.kundbehovsflode.logic.service.KundbehovService;
-import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Kundbehov;
+import se.fk.github.rimfrost.kundbehovsflode.logic.util.LogicMapper;
 
+@ApplicationScoped
 public class KundbehovServiceImpl implements KundbehovService
 {
    private static final Logger LOGGER = LoggerFactory.getLogger(KundbehovService.class);
 
-   private final KundbehovRepository kundbehovRepository;
+   @Inject
+   private KundbehovRepository kundbehovRepository;
 
    @Inject
-   public KundbehovServiceImpl(KundbehovRepository kundbehovRepository)
-   {
-      this.kundbehovRepository = kundbehovRepository;
-   }
+   private LogicMapper logicMapper;
 
    @Override
    public KundbehovCreateResponse createKundbehov(KundbehovCreateRequest request)
    {
       PeriodEntity periodEntity = ImmutablePeriodEntity.builder()
-         .start(request.start())
-         .slut(request.slut())
-         .build();
+            .start(request.start())
+            .slut(request.slut())
+            .build();
+
+
+      // TODO: Ta bort hårdkodning av namn
+      IndividEntity IndividEntity = ImmutableIndividEntity.builder()
+            .id(request.persnr())
+            .fornamn("Lisa")
+            .efternamn("Lott")
+            .build();
+
+      KundbehovsrollEntity kundbehovsrollEntity = ImmutableKundbehovsrollEntity.builder()
+            .id(UUID.randomUUID())
+            .individ(IndividEntity)
+            .roll(RollEntity.AGARE)
+            .yrkande(true)
+            .build();
 
       KundbehovEntity kundbehovEntity = ImmutableKundbehovEntity.builder()
-         .id(UUID.randomUUID())
-         .formanstyp(request.formanstyp())
-         .version("1.0")
-         .kundbehovsdatum(OffsetDateTime.now())
-         .kundbehovsstatus(KundbehovsstatusEntity.FASTSTALLT)
-         .period(periodEntity)
-         .avsikt(AvsiktEntity.NY)
-         .build();
+            .id(UUID.randomUUID())
+            .formanstyp(request.formanstyp())
+            .version("1.0")
+            .kundbehovsdatum(OffsetDateTime.now())
+            .kundbehovsstatus(KundbehovsstatusEntity.FASTSTALLT)
+            .period(periodEntity)
+            .avsikt(AvsiktEntity.NY)
+            .andringsorsak("")
+            .kundbehovsroll(List.of(kundbehovsrollEntity))
+            .build();
+
+      kundbehovRepository.save(kundbehovEntity);
 
       KundbehovCreateResponse kundbehovCreateResponse = ImmutableKundbehovCreateResponse.builder()
-         .build();
+            .kundbehov(logicMapper.toKundbehovDTO(kundbehovEntity))
+            .build();
 
       return kundbehovCreateResponse;
    }
 
    @Override
-   public Optional<KundbehovGetResponse> getById(KundbehovGetRequest id)
+   public KundbehovGetResponse getById(KundbehovGetRequest kundbehovGetRequest)
    {
-      throw new UnsupportedOperationException("Not supported yet.");
+      UUID id = UUID.fromString(kundbehovGetRequest.kundbehovId());
+      KundbehovEntity kundbehovEntity = kundbehovRepository.findById(id).orElse(null);
+      KundbehovGetResponse kundbehovGetResponse = ImmutableKundbehovGetResponse.builder()
+            .kundbehov(logicMapper.toKundbehovDTO(kundbehovEntity))
+            .build();
+      return kundbehovGetResponse;
    }
 
 }

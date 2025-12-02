@@ -5,5 +5,5 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface KundbehovGetRequest
 {
-    String kundbehovId();
+   String kundbehovId();
 }

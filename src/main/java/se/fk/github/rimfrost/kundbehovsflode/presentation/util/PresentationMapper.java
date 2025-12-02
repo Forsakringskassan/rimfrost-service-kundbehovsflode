@@ -29,6 +29,11 @@ public class PresentationMapper
 
    public KundbehovCreateRequest toKundbehovCreateRequest(PostKundbehovRequest postKundbehovRequest)
    {
+      if (postKundbehovRequest == null)
+      {
+         return null;
+      }
+
       KundbehovCreateRequest request = ImmutableKundbehovCreateRequest.builder()
             .persnr(postKundbehovRequest.getPersnr())
             .formanstyp(postKundbehovRequest.getPersnr())
@@ -38,13 +43,24 @@ public class PresentationMapper
       return request;
    }
 
-   public PostKundbehovResponse toPostKundbehovResponse(KundbehovCreateResponse kundbehovCreateResponse) {
+   public PostKundbehovResponse toPostKundbehovResponse(KundbehovCreateResponse kundbehovCreateResponse)
+   {
+      if (kundbehovCreateResponse == null)
+      {
+         return null;
+      }
       PostKundbehovResponse postKundbehovResponse = new PostKundbehovResponse();
       postKundbehovResponse.setKundbehov(toKundbehov(kundbehovCreateResponse.kundbehov()));
       return postKundbehovResponse;
    }
 
-   public Kundbehov toKundbehov(KundbehovDTO kundbehovDTO) {
+   public Kundbehov toKundbehov(KundbehovDTO kundbehovDTO)
+   {
+      if (kundbehovDTO == null)
+      {
+         return null;
+      }
+
       Kundbehov kundbehov = new Kundbehov();
       kundbehov.setId(kundbehovDTO.id());
       kundbehov.setFormanstyp(kundbehovDTO.formanstyp());
@@ -55,28 +71,38 @@ public class PresentationMapper
       kundbehov.setAvsikt(enumMapper.toAvsikt(kundbehovDTO.avsikt()));
       kundbehov.setAndringsorsak(kundbehovDTO.andringsorsak());
       kundbehov.setKundbehovsroll(
-         kundbehovDTO.kundbehovsroll()
-            .stream()
-            .map(this::toKundbehovsroll)
-            .toList()
-      );
+            kundbehovDTO.kundbehovsroll()
+                  .stream()
+                  .map(this::toKundbehovsroll)
+                  .toList());
       kundbehov.setErsattning(
-         kundbehovDTO.ersattning()
-            .stream()
-            .map(this::toErsattning)
-            .toList() 
-      );
+            kundbehovDTO.ersattning()
+                  .stream()
+                  .map(this::toErsattning)
+                  .toList());
       return kundbehov;
    }
 
-   public Period toPeriod(PeriodDTO periodDTO) {
+   public Period toPeriod(PeriodDTO periodDTO)
+   {
+      if (periodDTO == null)
+      {
+         return null;
+      }
+
       Period period = new Period();
       period.setStart(periodDTO.start());
       period.setSlut(periodDTO.slut());
       return period;
    }
 
-   public Kundbehovsroll toKundbehovsroll(KundbehovsrollDTO kundbehovsrollDTO) {
+   public Kundbehovsroll toKundbehovsroll(KundbehovsrollDTO kundbehovsrollDTO)
+   {
+      if (kundbehovsrollDTO == null)
+      {
+         return null;
+      }
+
       Kundbehovsroll kundbehovsroll = new Kundbehovsroll();
       kundbehovsroll.setId(kundbehovsrollDTO.id());
       kundbehovsroll.setIndivid(toIndivid(kundbehovsrollDTO.individ()));
@@ -85,7 +111,13 @@ public class PresentationMapper
       return kundbehovsroll;
    }
 
-   public Individ toIndivid(IndividDTO individDTO) {
+   public Individ toIndivid(IndividDTO individDTO)
+   {
+      if (individDTO == null)
+      {
+         return null;
+      }
+
       Individ individ = new Individ();
       individ.setId(individDTO.id());
       individ.setFornamn(individDTO.fornamn());
@@ -93,7 +125,13 @@ public class PresentationMapper
       return individ;
    }
 
-   public Ersattning toErsattning(ErsattningDTO ersattningDTO) {
+   public Ersattning toErsattning(ErsattningDTO ersattningDTO)
+   {
+      if (ersattningDTO == null)
+      {
+         return null;
+      }
+
       Ersattning ersattning = new Ersattning();
       ersattning.setId(ersattningDTO.id());
       ersattning.setBelopp(ersattningDTO.belopp());
@@ -105,15 +143,20 @@ public class PresentationMapper
       ersattning.setBeslutsutfall(enumMapper.toBeslutsutfallEnum(ersattningDTO.beslutsutfall()));
       ersattning.setAvslagsanledning(ersattningDTO.avslagsanledning());
       ersattning.setProduceratResultat(
-         ersattningDTO.produceratResultat()
-            .stream()
-            .map(this::toProduceratResultat)
-            .toList()
-      );
+            ersattningDTO.produceratResultat()
+                  .stream()
+                  .map(this::toProduceratResultat)
+                  .toList());
       return ersattning;
    }
 
-   public ProduceratResultat toProduceratResultat(ProduceratResultatDTO produceratResultatDTO) {
+   public ProduceratResultat toProduceratResultat(ProduceratResultatDTO produceratResultatDTO)
+   {
+      if (produceratResultatDTO == null)
+      {
+         return null;
+      }
+
       ProduceratResultat produceratResultat = new ProduceratResultat();
       produceratResultat.setId(produceratResultatDTO.id());
       produceratResultat.setVersion(produceratResultatDTO.version());
@@ -123,4 +166,3 @@ public class PresentationMapper
       return produceratResultat;
    }
 }
-

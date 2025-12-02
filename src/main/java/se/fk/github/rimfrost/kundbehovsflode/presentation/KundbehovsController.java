@@ -1,8 +1,13 @@
 package se.fk.github.rimfrost.kundbehovsflode.presentation;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovCreateRequest;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovCreateResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.service.KundbehovService;
@@ -11,6 +16,8 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.KundbehovControllerA
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PostKundbehovRequest;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PostKundbehovResponse;
 
+@ApplicationScoped
+@Path("/kundbehov")
 public class KundbehovsController implements KundbehovControllerApi
 {
 
@@ -21,6 +28,9 @@ public class KundbehovsController implements KundbehovControllerApi
    PresentationMapper presentationMapper;
 
    @Override
+   @POST
+   @Consumes({"application/json"})
+   @Produces({"application/json"})
    public PostKundbehovResponse postKundbehov(@Valid @NotNull PostKundbehovRequest postKundbehovRequest)
    {
       KundbehovCreateRequest kundbehovCreateRequest = presentationMapper.toKundbehovCreateRequest(postKundbehovRequest);

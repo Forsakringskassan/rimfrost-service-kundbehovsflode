@@ -23,8 +23,9 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Roll;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Verksamhetslogik;
 
 @ApplicationScoped
-public class PresentationEnumMapper {
-    public Avsikt toAvsikt(AvsiktDTO avisktDTO) {
+public class PresentationEnumMapper
+{
+   public Avsikt toAvsikt(AvsiktDTO avisktDTO) {
         Avsikt out;
         switch (avisktDTO) {
             case ANDRING -> out = Avsikt.ANDRING;
@@ -39,7 +40,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Beloppstyp toBeloppstyp(BeloppstypDTO beloppstypDTO) {
+   public Beloppstyp toBeloppstyp(BeloppstypDTO beloppstypDTO) {
         Beloppstyp out;
         switch (beloppstypDTO) {
             case GRUNDBELOPP -> out = Beloppstyp.GRUNDBELOPP;
@@ -52,7 +53,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Berakningsgrund toBerakningsgrund(BerakningsgrundDTO berakningsgrundDTO) {
+   public Berakningsgrund toBerakningsgrund(BerakningsgrundDTO berakningsgrundDTO) {
         Berakningsgrund out;
         switch (berakningsgrundDTO) {
             case FASTBELOPP -> out = Berakningsgrund.FASTBELOPP;
@@ -65,7 +66,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public BeslutsutfallEnum toBeslutsutfallEnum(BeslutsutfallDTO beslutsutfallDTO) {
+   public BeslutsutfallEnum toBeslutsutfallEnum(BeslutsutfallDTO beslutsutfallDTO) {
         BeslutsutfallEnum out;
         switch (beslutsutfallDTO) {
             case FU -> out = BeslutsutfallEnum.FU;
@@ -79,7 +80,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Ersattningsstatus toErsattningsstatus(ErsattningsstatusDTO ersattningsstatusDTO) {
+   public Ersattningsstatus toErsattningsstatus(ErsattningsstatusDTO ersattningsstatusDTO) {
         Ersattningsstatus out;
         switch (ersattningsstatusDTO) {
             case FASTSTALLT -> out = Ersattningsstatus.FASTSTALLT;
@@ -95,7 +96,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Ersattningstyp toErsattningstyp(ErsattningstypDTO ersattningstypDTO) {
+   public Ersattningstyp toErsattningstyp(ErsattningstypDTO ersattningstypDTO) {
         Ersattningstyp out;
         switch (ersattningstypDTO) {
             case HUNDBIDRAG -> out = Ersattningstyp.HUNDBIDRAG;
@@ -108,7 +109,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Kundbehovsstatus toKundbehovsstatus(KundbehovsstatusDTO kundbehovsstatusDTO) {
+   public Kundbehovsstatus toKundbehovsstatus(KundbehovsstatusDTO kundbehovsstatusDTO) {
         Kundbehovsstatus out;
         switch (kundbehovsstatusDTO) {
             case FASTSTALLT -> out = Kundbehovsstatus.FASTSTALLT;
@@ -124,7 +125,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Periodisering toPeriodisering(PeriodiseringDTO periodiseringDTO) {
+   public Periodisering toPeriodisering(PeriodiseringDTO periodiseringDTO) {
         Periodisering out;
         switch(periodiseringDTO) {
             case DAG -> out = Periodisering.DAG;
@@ -139,7 +140,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Roll toRoll(RollDTO rollDTO) {
+   public Roll toRoll(RollDTO rollDTO) {
         Roll out;
         switch(rollDTO) {
             case AGARE -> out = Roll.AGARE;
@@ -153,7 +154,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public Verksamhetslogik toVerksamhetslogik(VerksamhetslogikDTO verksamhetslogikDTO) {
+   public Verksamhetslogik toVerksamhetslogik(VerksamhetslogikDTO verksamhetslogikDTO) {
         Verksamhetslogik out;
         switch(verksamhetslogikDTO) {
             case A -> out = Verksamhetslogik.A;
@@ -166,7 +167,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-        public AvsiktDTO toAvsiktDTO(Avsikt avsikt) {
+   public AvsiktDTO toAvsiktDTO(Avsikt avsikt) {
         AvsiktDTO out;
         switch (avsikt) {
             case ANDRING -> out = AvsiktDTO.ANDRING;
@@ -181,7 +182,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public BeloppstypDTO toBeloppstypDTO(Beloppstyp beloppstyp) {
+   public BeloppstypDTO toBeloppstypDTO(Beloppstyp beloppstyp) {
         BeloppstypDTO out;
         switch (beloppstyp) {
             case GRUNDBELOPP -> out = BeloppstypDTO.GRUNDBELOPP;
@@ -194,7 +195,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public BerakningsgrundDTO toBerakningsgrundDTO(Berakningsgrund berakningsgrund) {
+   public BerakningsgrundDTO toBerakningsgrundDTO(Berakningsgrund berakningsgrund) {
         BerakningsgrundDTO out;
         switch (berakningsgrund) {
             case FASTBELOPP -> out = BerakningsgrundDTO.FASTBELOPP;
@@ -207,7 +208,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public BeslutsutfallDTO toBeslutsutfallDTO(BeslutsutfallEnum beslutsutfall) {
+   public BeslutsutfallDTO toBeslutsutfallDTO(BeslutsutfallEnum beslutsutfall) {
         BeslutsutfallDTO out;
         switch (beslutsutfall) {
             case FU -> out = BeslutsutfallDTO.FU;
@@ -221,7 +222,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public ErsattningsstatusDTO toErsattningsstatusDTO(Ersattningsstatus ersattningsstatus) {
+   public ErsattningsstatusDTO toErsattningsstatusDTO(Ersattningsstatus ersattningsstatus) {
         ErsattningsstatusDTO out;
         switch (ersattningsstatus) {
             case FASTSTALLT -> out = ErsattningsstatusDTO.FASTSTALLT;
@@ -237,7 +238,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public ErsattningstypDTO toErsattningstypDTO(Ersattningstyp ersattningstyp) {
+   public ErsattningstypDTO toErsattningstypDTO(Ersattningstyp ersattningstyp) {
         ErsattningstypDTO out;
         switch (ersattningstyp) {
             case HUNDBIDRAG -> out = ErsattningstypDTO.HUNDBIDRAG;
@@ -250,7 +251,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public KundbehovsstatusDTO toKundbehovsstatusDTO(Kundbehovsstatus kundbehovsstatus) {
+   public KundbehovsstatusDTO toKundbehovsstatusDTO(Kundbehovsstatus kundbehovsstatus) {
         KundbehovsstatusDTO out;
         switch (kundbehovsstatus) {
             case FASTSTALLT -> out = KundbehovsstatusDTO.FASTSTALLT;
@@ -266,7 +267,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public PeriodiseringDTO toPeriodiseringDTO(Periodisering periodisering) {
+   public PeriodiseringDTO toPeriodiseringDTO(Periodisering periodisering) {
         PeriodiseringDTO out;
         switch (periodisering) {
             case DAG -> out = PeriodiseringDTO.DAG;
@@ -281,7 +282,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public RollDTO toRollDTO(Roll roll) {
+   public RollDTO toRollDTO(Roll roll) {
         RollDTO out;
         switch (roll) {
             case AGARE -> out = RollDTO.AGARE;
@@ -295,7 +296,7 @@ public class PresentationEnumMapper {
         return out;
     }
 
-    public VerksamhetslogikDTO toVerksamhetslogikDTO(Verksamhetslogik verksamhetslogik) {
+   public VerksamhetslogikDTO toVerksamhetslogikDTO(Verksamhetslogik verksamhetslogik) {
         VerksamhetslogikDTO out;
         switch (verksamhetslogik) {
             case A -> out = VerksamhetslogikDTO.A;
