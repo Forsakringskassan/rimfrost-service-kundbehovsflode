@@ -5,7 +5,9 @@ import java.util.UUID;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface KundbehovGetRequest
+public interface KundbehovsflodePutRequest
 {
-   UUID kundbehovId();
+   UUID kundbehovsflodeId();
+
+   KundbehovsflodeDTO kundbehovsflode();
 }

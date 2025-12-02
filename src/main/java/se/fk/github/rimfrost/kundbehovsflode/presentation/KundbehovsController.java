@@ -25,17 +25,23 @@ public class KundbehovsController implements KundbehovControllerApi
    KundbehovService kundbehovService;
 
    @Inject
-   PresentationMapper presentationMapper;
+   PresentationMapper mapper;
 
    @Override
    @POST
-   @Consumes({"application/json"})
-   @Produces({"application/json"})
+   @Consumes(
+   {
+         "application/json"
+   })
+   @Produces(
+   {
+         "application/json"
+   })
    public PostKundbehovResponse postKundbehov(@Valid @NotNull PostKundbehovRequest postKundbehovRequest)
    {
-      KundbehovCreateRequest kundbehovCreateRequest = presentationMapper.toKundbehovCreateRequest(postKundbehovRequest);
+      KundbehovCreateRequest kundbehovCreateRequest = mapper.toKundbehovCreateRequest(postKundbehovRequest);
       KundbehovCreateResponse kundbehovCreateResponse = kundbehovService.createKundbehov(kundbehovCreateRequest);
-      PostKundbehovResponse response = presentationMapper.toPostKundbehovResponse(kundbehovCreateResponse);
+      PostKundbehovResponse response = mapper.toPostKundbehovResponse(kundbehovCreateResponse);
       return response;
    }
 

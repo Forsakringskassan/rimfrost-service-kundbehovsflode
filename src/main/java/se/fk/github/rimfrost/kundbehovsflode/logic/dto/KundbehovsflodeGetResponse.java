@@ -1,11 +1,9 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.dto;
 
-import java.util.UUID;
-
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface KundbehovGetRequest
+public interface KundbehovsflodeGetResponse
 {
-   UUID kundbehovId();
+   KundbehovsflodeDTO kundbehovsflode();
 }

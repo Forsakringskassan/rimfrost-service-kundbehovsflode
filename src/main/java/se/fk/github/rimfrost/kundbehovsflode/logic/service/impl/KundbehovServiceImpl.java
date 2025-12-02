@@ -39,7 +39,7 @@ public class KundbehovServiceImpl implements KundbehovService
    private KundbehovRepository kundbehovRepository;
 
    @Inject
-   private LogicMapper logicMapper;
+   private LogicMapper mapper;
 
    @Override
    public KundbehovCreateResponse createKundbehov(KundbehovCreateRequest request)
@@ -49,12 +49,11 @@ public class KundbehovServiceImpl implements KundbehovService
             .slut(request.slut())
             .build();
 
-
       // TODO: Ta bort hårdkodning av namn
       IndividEntity IndividEntity = ImmutableIndividEntity.builder()
             .id(request.persnr())
             .fornamn("Lisa")
-            .efternamn("Lott")
+            .efternamn("Tass")
             .build();
 
       KundbehovsrollEntity kundbehovsrollEntity = ImmutableKundbehovsrollEntity.builder()
@@ -79,7 +78,7 @@ public class KundbehovServiceImpl implements KundbehovService
       kundbehovRepository.save(kundbehovEntity);
 
       KundbehovCreateResponse kundbehovCreateResponse = ImmutableKundbehovCreateResponse.builder()
-            .kundbehov(logicMapper.toKundbehovDTO(kundbehovEntity))
+            .kundbehov(mapper.toKundbehovDTO(kundbehovEntity))
             .build();
 
       return kundbehovCreateResponse;
@@ -88,10 +87,10 @@ public class KundbehovServiceImpl implements KundbehovService
    @Override
    public KundbehovGetResponse getById(KundbehovGetRequest kundbehovGetRequest)
    {
-      UUID id = UUID.fromString(kundbehovGetRequest.kundbehovId());
+      UUID id = kundbehovGetRequest.kundbehovId();
       KundbehovEntity kundbehovEntity = kundbehovRepository.findById(id).orElse(null);
       KundbehovGetResponse kundbehovGetResponse = ImmutableKundbehovGetResponse.builder()
-            .kundbehov(logicMapper.toKundbehovDTO(kundbehovEntity))
+            .kundbehov(mapper.toKundbehovDTO(kundbehovEntity))
             .build();
       return kundbehovGetResponse;
    }
