@@ -62,7 +62,6 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
             .version("1.0")
             .processinstansId(UUID.randomUUID()) // TODO: Fixa denna så att vi startar en ny process och stoppar den här??
             .skapadTS(OffsetDateTime.now())
-            .avslutadTS(null)
             .kundbehovsspecifikation(kundbehovsflodespecifikationEntity)
             .build();
 
