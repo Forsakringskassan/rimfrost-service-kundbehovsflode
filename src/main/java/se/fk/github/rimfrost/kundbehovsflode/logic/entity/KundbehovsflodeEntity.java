@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.immutables.value.Value;
 
+import jakarta.annotation.Nullable;
+
 @Value.Immutable
 public interface KundbehovsflodeEntity
 {
@@ -18,6 +20,7 @@ public interface KundbehovsflodeEntity
 
    OffsetDateTime skapadTS();
 
+   @Nullable
    OffsetDateTime avslutadTS();
 
    KundbehovsflodespecifikationEntity kundbehovsspecifikation();

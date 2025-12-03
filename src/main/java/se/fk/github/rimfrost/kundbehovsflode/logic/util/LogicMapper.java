@@ -25,6 +25,17 @@ import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ProduceratResultatDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.RegelDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.UppgiftspecifikationDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ErsattningEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableErsattningEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableIndividEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableKundbehovEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableKundbehovsflodeEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableKundbehovsflodespecifikationEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableKundbehovsrollEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableLagrumEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutablePeriodEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableProduceratResultatEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableRegelEntity;
+import se.fk.github.rimfrost.kundbehovsflode.logic.entity.ImmutableUppgiftspecifikationEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.IndividEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.KundbehovEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.KundbehovsflodeEntity;
@@ -264,4 +275,221 @@ public class LogicMapper
 
       return lagrumDTO;
    }
+
+   public KundbehovEntity toKundbehovEntity(KundbehovDTO kundbehovDTO)
+   {
+      if (kundbehovDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableKundbehovEntity.builder()
+            .id(kundbehovDTO.id())
+            .formanstyp(kundbehovDTO.formanstyp())
+            .version(kundbehovDTO.version())
+            .kundbehovsdatum(kundbehovDTO.kundbehovsdatum())
+            .kundbehovsstatus(enumMapper.toKundbehovsstatusEntity(kundbehovDTO.kundbehovsstatus()))
+            .period(toPeriodEntity(kundbehovDTO.period()))
+            .avsikt(enumMapper.toAvsiktEntity(kundbehovDTO.avsikt()))
+            .andringsorsak(kundbehovDTO.andringsorsak())
+            .kundbehovsroll(
+                  kundbehovDTO.kundbehovsroll()
+                        .stream()
+                        .map(this::toKundbehovsrollEntity)
+                        .toList())
+            .ersattning(
+                  kundbehovDTO.ersattning()
+                        .stream()
+                        .map(this::toErsattningEntity)
+                        .toList())
+            .build();
+   }
+
+   public PeriodEntity toPeriodEntity(PeriodDTO periodDTO)
+   {
+      if (periodDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutablePeriodEntity.builder()
+            .start(periodDTO.start())
+            .slut(periodDTO.slut())
+            .build();
+   }
+
+   public KundbehovsrollEntity toKundbehovsrollEntity(KundbehovsrollDTO kundbehovsrollDTO)
+   {
+      if (kundbehovsrollDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableKundbehovsrollEntity.builder()
+            .id(kundbehovsrollDTO.id())
+            .individ(toIndividEntity(kundbehovsrollDTO.individ()))
+            .roll(enumMapper.toRollEntity(kundbehovsrollDTO.roll()))
+            .yrkande(kundbehovsrollDTO.yrkande())
+            .build();
+   }
+
+   public IndividEntity toIndividEntity(IndividDTO individDTO)
+   {
+      if (individDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableIndividEntity.builder()
+            .id(individDTO.id())
+            .fornamn(individDTO.fornamn())
+            .efternamn(individDTO.efternamn())
+            .build();
+   }
+
+   public ErsattningEntity toErsattningEntity(ErsattningDTO ersattningDTO)
+   {
+      if (ersattningDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableErsattningEntity.builder()
+            .id(ersattningDTO.id())
+            .belopp(ersattningDTO.belopp())
+            .berakningsgrund(enumMapper.toBerakningsgrundEntity(ersattningDTO.berakningsgrund()))
+            .beloppstyp(enumMapper.toBeloppstypEntity(ersattningDTO.beloppstyp()))
+            .ersattningstyp(enumMapper.toErsattningstypEntity(ersattningDTO.ersattningstyp()))
+            .periodisering(enumMapper.toPeriodiseringEntity(ersattningDTO.periodisering()))
+            .omfattning(ersattningDTO.omfattning())
+            .beslutsutfall(enumMapper.toBeslutsutfallEntity(ersattningDTO.beslutsutfall()))
+            .avslagsanledning(ersattningDTO.avslagsanledning())
+            .produceratResultat(
+                  ersattningDTO.produceratResultat()
+                        .stream()
+                        .map(this::toProduceratResultatEntity)
+                        .toList())
+            .build();
+   }
+
+   public ProduceratResultatEntity toProduceratResultatEntity(ProduceratResultatDTO produceratResultatDTO)
+   {
+      if (produceratResultatDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableProduceratResultatEntity.builder()
+            .id(produceratResultatDTO.id())
+            .version(produceratResultatDTO.version())
+            .franOchMed(produceratResultatDTO.franOchMed())
+            .tillOchMed(produceratResultatDTO.tillOchMed())
+            .status(enumMapper.toErsattningsstatusEntity(produceratResultatDTO.status()))
+            .build();
+   }
+
+   public KundbehovsflodeEntity toKundbehovsflodeEntity(KundbehovsflodeDTO kundbehovsflodeDTO)
+   {
+      if (kundbehovsflodeDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableKundbehovsflodeEntity.builder()
+            .id(kundbehovsflodeDTO.id())
+            .kundbehov(toKundbehovEntity(kundbehovsflodeDTO.kundbehov()))
+            .version(kundbehovsflodeDTO.version())
+            .processinstansId(kundbehovsflodeDTO.processinstansId())
+            .skapadTS(kundbehovsflodeDTO.skapadTS())
+            .avslutadTS(kundbehovsflodeDTO.avslutadTS())
+            .kundbehovsspecifikation(
+                  toKundbehovsflodespecifikationEntity(kundbehovsflodeDTO.kundbehovsspecifikation()))
+            .build();
+   }
+
+   public KundbehovsflodespecifikationEntity toKundbehovsflodespecifikationEntity(
+         KundbehovsflodespecifikationDTO kundbehovsflodespecifikationDTO)
+   {
+      if (kundbehovsflodespecifikationDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableKundbehovsflodespecifikationEntity.builder()
+            .id(kundbehovsflodespecifikationDTO.id())
+            .version(kundbehovsflodespecifikationDTO.version())
+            .bpmn(kundbehovsflodespecifikationDTO.bpmn())
+            .namn(kundbehovsflodespecifikationDTO.namn())
+            .beskrivning(kundbehovsflodespecifikationDTO.beskrivning())
+            .uppgiftspecifikation(
+                  kundbehovsflodespecifikationDTO.uppgiftspecifikation()
+                        .stream()
+                        .map(this::toUppgiftspecifikationEntity)
+                        .toList())
+            .build();
+   }
+
+   public UppgiftspecifikationEntity toUppgiftspecifikationEntity(UppgiftspecifikationDTO uppgiftspecifikationDTO)
+   {
+      if (uppgiftspecifikationDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableUppgiftspecifikationEntity.builder()
+            .id(uppgiftspecifikationDTO.id())
+            .version(uppgiftspecifikationDTO.version())
+            .namn(uppgiftspecifikationDTO.namn())
+            .uppgiftbeskrivning(uppgiftspecifikationDTO.uppgiftbeskrivning())
+            .verksamhetslogik(enumMapper.toVerksamhetslogikEntity(uppgiftspecifikationDTO.verksamhetslogik()))
+            .roll(enumMapper.toRollEntity(uppgiftspecifikationDTO.roll()))
+            .applikationsId(uppgiftspecifikationDTO.applikationsId())
+            .applikationsVersion(uppgiftspecifikationDTO.applikationsVersion())
+            .regel(
+                  uppgiftspecifikationDTO.regel()
+                        .stream()
+                        .map(this::toRegelEntity)
+                        .toList())
+            .uppgiftsGui(uppgiftspecifikationDTO.uppgiftsGui())
+            .build();
+   }
+
+   public RegelEntity toRegelEntity(RegelDTO regelDTO)
+   {
+      if (regelDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableRegelEntity.builder()
+            .id(regelDTO.id())
+            .version(regelDTO.version())
+            .lagrum(
+                  regelDTO.lagrum()
+                        .stream()
+                        .map(this::toLagrumEntity)
+                        .toList())
+            .build();
+   }
+
+   public LagrumEntity toLagrumEntity(LagrumDTO lagrumDTO)
+   {
+      if (lagrumDTO == null)
+      {
+         return null;
+      }
+
+      return ImmutableLagrumEntity.builder()
+            .id(lagrumDTO.id())
+            .version(lagrumDTO.version())
+            .giltigFrom(lagrumDTO.giltigFrom())
+            .giltigTom(lagrumDTO.giltigTom())
+            .forfattning(lagrumDTO.forfattning())
+            .kapitel(lagrumDTO.kapitel())
+            .paragraf(lagrumDTO.paragraf())
+            .stycke(lagrumDTO.stycke())
+            .punkt(lagrumDTO.punkt())
+            .build();
+   }
+
 }

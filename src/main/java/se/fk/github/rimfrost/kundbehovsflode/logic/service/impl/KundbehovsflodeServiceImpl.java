@@ -6,6 +6,8 @@ import java.util.UUID;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovsflodeCreateResponse;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovsflodeGetResponse;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovsflodePutResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovsflodeCreateRequest;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovsflodeCreateResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovsflodeGetRequest;
@@ -44,12 +46,14 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
 
       KundbehovEntity kundbehovEntity = kundbehovRepository.findById(request.kundbehovId()).orElse(null);
 
+      // Innehåller ingen uppgiftspecifikation just nu
       KundbehovsflodespecifikationEntity kundbehovsflodespecifikationEntity = ImmutableKundbehovsflodespecifikationEntity
             .builder()
             .id(UUID.randomUUID())
             .version("1.0")
             .bpmn("VAH") // TODO: Uppdatera detta till något annat baserat på kundbehovets typ?
             .namn("Vård av hudsjur") // TODO: Uppdatera detta till något annat baserat på kundbehovets typ?
+            .beskrivning("Kollar om du har rätt för ersättning för vård av husdjur")
             .build();
 
       KundbehovsflodeEntity kundbehovsflodeEntity = ImmutableKundbehovsflodeEntity.builder()
@@ -74,15 +78,30 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
    @Override
    public KundbehovsflodeGetResponse getKundbehovsflode(KundbehovsflodeGetRequest request)
    {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getById'");
+      KundbehovsflodeEntity kundbehovsflodeEntity = kundbehovsflodeRepository.findById(request.kundbehovsflodeId()).orElse(null);
+      if (kundbehovsflodeEntity == null)
+      {
+         return null;
+      }
+
+      // Vet inte riktigt hur man vill hantera detta då kundbehov kommer finnas i kundbehovsflode, måste man hämta ut det eller inte?
+
+      KundbehovsflodeGetResponse response = ImmutableKundbehovsflodeGetResponse.builder()
+            .kundbehovsflode(mapper.toKundbehovsflodeDTO(kundbehovsflodeEntity))
+            .build();
+
+      return response;
    }
 
    @Override
    public KundbehovsflodePutResponse putKundbehovsflode(KundbehovsflodePutRequest request)
    {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'updateById'");
+      kundbehovsflodeRepository.save(mapper.toKundbehovsflodeEntity(request.kundbehovsflode()));
+      KundbehovsflodePutResponse response = ImmutableKundbehovsflodePutResponse.builder()
+            .kundbehovsflode(request.kundbehovsflode())
+            .build();
+
+      return response;
    }
 
 }

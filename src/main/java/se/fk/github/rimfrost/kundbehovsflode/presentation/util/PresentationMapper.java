@@ -265,9 +265,9 @@ public class PresentationMapper
       }
 
       KundbehovsflodePutRequest request = ImmutableKundbehovsflodePutRequest.builder()
-         .kundbehovsflodeId(kundbehovsflodeId)
-         .kundbehovsflode(toKundbehovsflodeDTO(putKundbehovsflodeRequest.getKundbehovsflode()))
-         .build();
+            .kundbehovsflodeId(kundbehovsflodeId)
+            .kundbehovsflode(toKundbehovsflodeDTO(putKundbehovsflodeRequest.getKundbehovsflode()))
+            .build();
 
       return request;
    }
@@ -419,17 +419,17 @@ public class PresentationMapper
       }
 
       KundbehovsflodespecifikationDTO kundbehovsflodespecifikationDTO = ImmutableKundbehovsflodespecifikationDTO.builder()
-         .id(kundbehovsflodespecifikation.getId())
-         .version(kundbehovsflodespecifikation.getVersion())
-         .bpmn(kundbehovsflodespecifikation.getBpmn())
-         .namn(kundbehovsflodespecifikation.getNamn())
-         .beskrivning(kundbehovsflodespecifikation.getBeskrivning())
-         .uppgiftspecifikation(
-            kundbehovsflodespecifikation.getUppgiftspecifikation()
-               .stream()
-               .map(this::toUppgiftspecifikationDTO)
-               .toList())
-         .build();
+            .id(kundbehovsflodespecifikation.getId())
+            .version(kundbehovsflodespecifikation.getVersion())
+            .bpmn(kundbehovsflodespecifikation.getBpmn())
+            .namn(kundbehovsflodespecifikation.getNamn())
+            .beskrivning(kundbehovsflodespecifikation.getBeskrivning())
+            .uppgiftspecifikation(
+                  kundbehovsflodespecifikation.getUppgiftspecifikation()
+                        .stream()
+                        .map(this::toUppgiftspecifikationDTO)
+                        .toList())
+            .build();
 
       return kundbehovsflodespecifikationDTO;
    }
@@ -442,21 +442,21 @@ public class PresentationMapper
       }
 
       UppgiftspecifikationDTO uppgiftspecifikationDTO = ImmutableUppgiftspecifikationDTO.builder()
-         .id(uppgiftspecifikation.getId())
-         .version(uppgiftspecifikation.getVersion())
-         .namn(uppgiftspecifikation.getNamn())
-         .uppgiftbeskrivning(uppgiftspecifikation.getUppgiftbeskrivning())
-         .verksamhetslogik(enumMapper.toVerksamhetslogikDTO(uppgiftspecifikation.getVerksamhetslogik()))
-         .roll(enumMapper.toRollDTO(uppgiftspecifikation.getRoll()))
-         .applikationsId(uppgiftspecifikation.getApplikationsId())
-         .applikationsVersion(uppgiftspecifikation.getApplikationsVersion())
-         .regel(
-            uppgiftspecifikation.getRegel()
-               .stream()
-               .map(this::toRegelDTO)
-               .toList())
-         .uppgiftsGui(uppgiftspecifikation.getUppgiftsGui())
-         .build();
+            .id(uppgiftspecifikation.getId())
+            .version(uppgiftspecifikation.getVersion())
+            .namn(uppgiftspecifikation.getNamn())
+            .uppgiftbeskrivning(uppgiftspecifikation.getUppgiftbeskrivning())
+            .verksamhetslogik(enumMapper.toVerksamhetslogikDTO(uppgiftspecifikation.getVerksamhetslogik()))
+            .roll(enumMapper.toRollDTO(uppgiftspecifikation.getRoll()))
+            .applikationsId(uppgiftspecifikation.getApplikationsId())
+            .applikationsVersion(uppgiftspecifikation.getApplikationsVersion())
+            .regel(
+                  uppgiftspecifikation.getRegel()
+                        .stream()
+                        .map(this::toRegelDTO)
+                        .toList())
+            .uppgiftsGui(uppgiftspecifikation.getUppgiftsGui())
+            .build();
 
       return uppgiftspecifikationDTO;
    }
@@ -469,14 +469,14 @@ public class PresentationMapper
       }
 
       RegelDTO regelDTO = ImmutableRegelDTO.builder()
-         .id(regel.getId())
-         .version(regel.getVersion())
-         .lagrum(
-            regel.getLagrum()
-               .stream()
-               .map(this::toLagrumDTO)
-               .toList())
-         .build();
+            .id(regel.getId())
+            .version(regel.getVersion())
+            .lagrum(
+                  regel.getLagrum()
+                        .stream()
+                        .map(this::toLagrumDTO)
+                        .toList())
+            .build();
 
       return regelDTO;
    }
@@ -489,16 +489,16 @@ public class PresentationMapper
       }
 
       LagrumDTO lagrumDTO = ImmutableLagrumDTO.builder()
-         .id(lagrum.getId())
-         .version(lagrum.getVersion())
-         .giltigFrom(lagrum.getGiltigFrom())
-         .giltigTom(lagrum.getGiltigTom())
-         .forfattning(lagrum.getForfattning())
-         .kapitel(lagrum.getKapitel())
-         .paragraf(lagrum.getParagraf())
-         .stycke(lagrum.getStycke())
-         .punkt(lagrum.getPunkt())
-         .build();
+            .id(lagrum.getId())
+            .version(lagrum.getVersion())
+            .giltigFrom(lagrum.getGiltigFrom())
+            .giltigTom(lagrum.getGiltigTom())
+            .forfattning(lagrum.getForfattning())
+            .kapitel(lagrum.getKapitel())
+            .paragraf(lagrum.getParagraf())
+            .stycke(lagrum.getStycke())
+            .punkt(lagrum.getPunkt())
+            .build();
 
       return lagrumDTO;
    }
@@ -511,23 +511,23 @@ public class PresentationMapper
       }
 
       return ImmutableKundbehovDTO.builder()
-         .id(kundbehov.getId())
-         .formanstyp(kundbehov.getFormanstyp())
-         .version(kundbehov.getVersion())
-         .kundbehovsdatum(kundbehov.getKundbehovsdatum())
-         .kundbehovsstatus(enumMapper.toKundbehovsstatusDTO(kundbehov.getKundbehovsstatus()))
-         .period(toPeriodDTO(kundbehov.getPeriod()))
-         .avsikt(enumMapper.toAvsiktDTO(kundbehov.getAvsikt()))
-         .andringsorsak(kundbehov.getAndringsorsak())
-         .kundbehovsroll(kundbehov.getKundbehovsroll()
-            .stream()
-            .map(this::toKundbehovsrollDTO)
-            .toList())
-         .ersattning(kundbehov.getErsattning()
-            .stream()
-            .map(this::toErsattningDTO)
-            .toList())
-         .build();
+            .id(kundbehov.getId())
+            .formanstyp(kundbehov.getFormanstyp())
+            .version(kundbehov.getVersion())
+            .kundbehovsdatum(kundbehov.getKundbehovsdatum())
+            .kundbehovsstatus(enumMapper.toKundbehovsstatusDTO(kundbehov.getKundbehovsstatus()))
+            .period(toPeriodDTO(kundbehov.getPeriod()))
+            .avsikt(enumMapper.toAvsiktDTO(kundbehov.getAvsikt()))
+            .andringsorsak(kundbehov.getAndringsorsak())
+            .kundbehovsroll(kundbehov.getKundbehovsroll()
+                  .stream()
+                  .map(this::toKundbehovsrollDTO)
+                  .toList())
+            .ersattning(kundbehov.getErsattning()
+                  .stream()
+                  .map(this::toErsattningDTO)
+                  .toList())
+            .build();
    }
 
    public PeriodDTO toPeriodDTO(Period period)
@@ -538,9 +538,9 @@ public class PresentationMapper
       }
 
       return ImmutablePeriodDTO.builder()
-         .start(period.getStart())
-         .slut(period.getSlut())
-         .build();
+            .start(period.getStart())
+            .slut(period.getSlut())
+            .build();
    }
 
    public KundbehovsrollDTO toKundbehovsrollDTO(Kundbehovsroll kundbehovsroll)
@@ -551,11 +551,11 @@ public class PresentationMapper
       }
 
       return ImmutableKundbehovsrollDTO.builder()
-         .id(kundbehovsroll.getId())
-         .individ(toIndividDTO(kundbehovsroll.getIndivid()))
-         .roll(enumMapper.toRollDTO(kundbehovsroll.getRoll()))
-         .yrkande(kundbehovsroll.getYrkande())
-         .build();
+            .id(kundbehovsroll.getId())
+            .individ(toIndividDTO(kundbehovsroll.getIndivid()))
+            .roll(enumMapper.toRollDTO(kundbehovsroll.getRoll()))
+            .yrkande(kundbehovsroll.getYrkande())
+            .build();
    }
 
    public IndividDTO toIndividDTO(Individ individ)
@@ -566,10 +566,10 @@ public class PresentationMapper
       }
 
       return ImmutableIndividDTO.builder()
-         .id(individ.getId())
-         .fornamn(individ.getFornamn())
-         .efternamn(individ.getEfternamn())
-         .build();
+            .id(individ.getId())
+            .fornamn(individ.getFornamn())
+            .efternamn(individ.getEfternamn())
+            .build();
    }
 
    public ErsattningDTO toErsattningDTO(Ersattning ersattning)
@@ -580,20 +580,20 @@ public class PresentationMapper
       }
 
       return ImmutableErsattningDTO.builder()
-         .id(ersattning.getId())
-         .belopp(ersattning.getBelopp())
-         .berakningsgrund(enumMapper.toBerakningsgrundDTO(ersattning.getBerakningsgrund()))
-         .beloppstyp(enumMapper.toBeloppstypDTO(ersattning.getBeloppstyp()))
-         .ersattningstyp(enumMapper.toErsattningstypDTO(ersattning.getErsattningstyp()))
-         .periodisering(enumMapper.toPeriodiseringDTO(ersattning.getPeriodisering()))
-         .omfattning(ersattning.getOmfattning())
-         .beslutsutfall(enumMapper.toBeslutsutfallDTO(ersattning.getBeslutsutfall()))
-         .avslagsanledning(ersattning.getAvslagsanledning())
-         .produceratResultat(ersattning.getProduceratResultat()
-            .stream()
-            .map(this::toProduceratResultatDTO)
-            .toList())
-         .build();
+            .id(ersattning.getId())
+            .belopp(ersattning.getBelopp())
+            .berakningsgrund(enumMapper.toBerakningsgrundDTO(ersattning.getBerakningsgrund()))
+            .beloppstyp(enumMapper.toBeloppstypDTO(ersattning.getBeloppstyp()))
+            .ersattningstyp(enumMapper.toErsattningstypDTO(ersattning.getErsattningstyp()))
+            .periodisering(enumMapper.toPeriodiseringDTO(ersattning.getPeriodisering()))
+            .omfattning(ersattning.getOmfattning())
+            .beslutsutfall(enumMapper.toBeslutsutfallDTO(ersattning.getBeslutsutfall()))
+            .avslagsanledning(ersattning.getAvslagsanledning())
+            .produceratResultat(ersattning.getProduceratResultat()
+                  .stream()
+                  .map(this::toProduceratResultatDTO)
+                  .toList())
+            .build();
    }
 
    public ProduceratResultatDTO toProduceratResultatDTO(ProduceratResultat produceratResultat)
@@ -604,12 +604,12 @@ public class PresentationMapper
       }
 
       return ImmutableProduceratResultatDTO.builder()
-         .id(produceratResultat.getId())
-         .version(produceratResultat.getVersion())
-         .franOchMed(produceratResultat.getFrom())
-         .tillOchMed(produceratResultat.getTom())
-         .status(enumMapper.toErsattningsstatusDTO(produceratResultat.getStatus()))
-         .build();
+            .id(produceratResultat.getId())
+            .version(produceratResultat.getVersion())
+            .franOchMed(produceratResultat.getFrom())
+            .tillOchMed(produceratResultat.getTom())
+            .status(enumMapper.toErsattningsstatusDTO(produceratResultat.getStatus()))
+            .build();
    }
 
 }

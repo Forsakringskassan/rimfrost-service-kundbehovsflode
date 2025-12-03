@@ -5,9 +5,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import se.fk.github.rimfrost.kundbehovsflode.logic.entity.KundbehovsflodeEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.repository.KundbehovsflodeRepository;
 
+@ApplicationScoped
 public class KundbehovsflodeRepositoryImpl implements KundbehovsflodeRepository
 {
    private final Map<UUID, KundbehovsflodeEntity> store = new ConcurrentHashMap<>();
