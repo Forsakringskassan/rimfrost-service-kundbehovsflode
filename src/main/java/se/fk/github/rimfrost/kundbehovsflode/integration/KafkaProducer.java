@@ -21,8 +21,6 @@ public class KafkaProducer
 
    public void sendVahRequestMessage(UUID kundebehovsflodeId)
    {
-
-      System.out.println("SKICKAR MESSAGE!");
       var data = new VahKundbehovsflodeRequestMessageData();
       data.setKundbehovsflodeId(kundebehovsflodeId.toString());
 
