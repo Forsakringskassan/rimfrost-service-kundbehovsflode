@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import se.fk.github.rimfrost.kundbehovsflode.integration.KafkaProducer;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovsflodeCreateResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovsflodeGetResponse;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovsflodePutResponse;
@@ -32,6 +33,9 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
 
    @Inject
    KundbehovRepository kundbehovRepository;
+
+   @Inject
+   KafkaProducer producer;
 
    @Inject
    private LogicMapper mapper;
@@ -66,6 +70,7 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
             .build();
 
       kundbehovsflodeRepository.save(kundbehovsflodeEntity);
+      producer.sendVahRequestMessage(kundbehovsflodeEntity.id());
 
       KundbehovsflodeCreateResponse response = ImmutableKundbehovsflodeCreateResponse.builder()
             .kundbehovsflode(mapper.toKundbehovsflodeDTO(kundbehovsflodeEntity))
