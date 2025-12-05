@@ -73,7 +73,7 @@ public class PresentationMapper
 
       KundbehovCreateRequest request = ImmutableKundbehovCreateRequest.builder()
             .persnr(postKundbehovRequest.getPersnr())
-            .formanstyp(postKundbehovRequest.getPersnr())
+            .formanstyp(postKundbehovRequest.getFormanstyp())
             .start(postKundbehovRequest.getPeriod().getStart())
             .slut(postKundbehovRequest.getPeriod().getSlut())
             .build();
