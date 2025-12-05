@@ -35,4 +35,7 @@ public class KafkaProducer
       emitter.send(payload);
    }
 
+    @Channel("kundbehovsflode-done")
+    Emitter<KundbehovsflodeDoneMessagePayload> emitter;
+
 }
