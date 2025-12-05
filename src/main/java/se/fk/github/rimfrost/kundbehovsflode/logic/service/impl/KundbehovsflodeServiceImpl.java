@@ -108,4 +108,10 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
       return response;
    }
 
+    @Override
+    public void sendKundbehovsflodeDoneMessage(UUID kundbehovsflodeID) {
+        producer.sendKundbehovsflodeDone(kundbehovsflodeID);
+    }
+
+
 }

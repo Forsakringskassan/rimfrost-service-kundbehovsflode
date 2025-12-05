@@ -7,32 +7,37 @@ import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.KogitoProcType;
-import se.fk.rimfrost.SpecVersion;
-import se.fk.rimfrost.VahKundbehovsflodeRequestMessageData;
-import se.fk.rimfrost.VahKundbehovsflodeRequestMessagePayload;
+import se.fk.rimfrost.*;
 
 @ApplicationScoped
 public class KafkaProducer
 {
 
    @Channel("vah-kundbehovsflode-requests")
-   Emitter<VahKundbehovsflodeRequestMessagePayload> emitter;
+   Emitter<VahKundbehovsflodeRequestMessagePayload> vahEmitter;
 
-   public void sendVahRequestMessage(UUID kundebehovsflodeId)
+   public void sendVahRequestMessage(UUID kundbehovsflodeId)
    {
       var data = new VahKundbehovsflodeRequestMessageData();
-      data.setKundbehovsflodeId(kundebehovsflodeId.toString());
+      data.setKundbehovsflodeId(kundbehovsflodeId.toString());
 
       var payload = new VahKundbehovsflodeRequestMessagePayload();
-      payload.setId(kundebehovsflodeId.toString());
+      payload.setId(kundbehovsflodeId.toString());
       payload.setData(data);
       payload.setType("vah-kundbehovsflode-requests");
       payload.setSource("/service/kundbehovsflode");
       payload.setTime(OffsetDateTime.now());
       payload.setSpecversion(SpecVersion.NUMBER_1_DOT_0);
       payload.setKogitoproctype(KogitoProcType.BPMN);
-      emitter.send(payload);
+      vahEmitter.send(payload);
    }
 
+    @Channel("kundbehovsflode-done")
+    Emitter<KundbehovsflodeDoneMessage> kundbehovsflodeDoneMessageEmitter;
+    public void sendKundbehovsflodeDone(UUID kundbehovsflodeId)
+    {
+        var payload = new KundbehovsflodeDoneMessage();
+        payload.setKundbehovsflodeId(kundbehovsflodeId.toString());
+        kundbehovsflodeDoneMessageEmitter.send(payload);
+    }
 }

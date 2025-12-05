@@ -7,6 +7,8 @@ import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovsflodeGetRespons
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovsflodePutRequest;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovsflodePutResponse;
 
+import java.util.UUID;
+
 public interface KundbehovsflodeService
 {
    KundbehovsflodeCreateResponse createKundbehovsflode(KundbehovsflodeCreateRequest request);
@@ -14,4 +16,6 @@ public interface KundbehovsflodeService
    KundbehovsflodeGetResponse getKundbehovsflode(KundbehovsflodeGetRequest request);
 
    KundbehovsflodePutResponse putKundbehovsflode(KundbehovsflodePutRequest request);
+
+   void sendKundbehovsflodeDoneMessage(UUID kundbehovsflodeID);
 }
