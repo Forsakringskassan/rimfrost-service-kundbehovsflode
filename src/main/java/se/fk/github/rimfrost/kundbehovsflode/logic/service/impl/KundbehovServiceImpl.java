@@ -85,53 +85,62 @@ public class KundbehovServiceImpl implements KundbehovService
             .build();
 
       List<ErsattningEntity> ersattningar = new ArrayList<>();
-      for (int i = 0; i < days; i++) {
-            LocalDate currentDate = startDate.plusDays(i);
+      for (int i = 0; i < days; i++)
+      {
+         LocalDate currentDate = startDate.plusDays(i);
 
-            OffsetDateTime franOchMed;
-            OffsetDateTime tillOchMed;
+         OffsetDateTime franOchMed;
+         OffsetDateTime tillOchMed;
 
-            if (i == 0) {
-                  // First day
-                  franOchMed = start;
+         if (i == 0)
+         {
+            // First day
+            franOchMed = start;
 
-                  if (startDate.equals(endDate)) {
-                        tillOchMed = slut;
-                  } else {
-                        tillOchMed = currentDate.atTime(LocalTime.MAX).atOffset(start.getOffset());
-                  }
-            } else if (currentDate.equals(endDate)) {
-                  // Last day
-                  franOchMed = currentDate.atStartOfDay().atOffset(slut.getOffset());
-                  tillOchMed = slut;
-            } else {
-                  // Middle day
-                  franOchMed = currentDate.atStartOfDay().atOffset(start.getOffset());
-                  tillOchMed = currentDate.atTime(LocalTime.MAX).atOffset(start.getOffset());
+            if (startDate.equals(endDate))
+            {
+               tillOchMed = slut;
             }
+            else
+            {
+               tillOchMed = currentDate.atTime(LocalTime.MAX).atOffset(start.getOffset());
+            }
+         }
+         else if (currentDate.equals(endDate))
+         {
+            // Last day
+            franOchMed = currentDate.atStartOfDay().atOffset(slut.getOffset());
+            tillOchMed = slut;
+         }
+         else
+         {
+            // Middle day
+            franOchMed = currentDate.atStartOfDay().atOffset(start.getOffset());
+            tillOchMed = currentDate.atTime(LocalTime.MAX).atOffset(start.getOffset());
+         }
 
-            ProduceratResultatEntity pre = ImmutableProduceratResultatEntity.builder()
-                  .id(UUID.randomUUID())
-                  .version("1.0")
-                  .franOchMed(franOchMed)
-                  .tillOchMed(tillOchMed)
-                  .status(ErsattningsstatusEntity.PLANERAT)
-                  .build();
+         ProduceratResultatEntity pre = ImmutableProduceratResultatEntity.builder()
+               .id(UUID.randomUUID())
+               .version("1.0")
+               .franOchMed(franOchMed)
+               .tillOchMed(tillOchMed)
+               .status(ErsattningsstatusEntity.PLANERAT)
+               .build();
 
-            ErsattningEntity ersattningEntity = ImmutableErsattningEntity.builder()
-                  .id(UUID.randomUUID())
-                  .belopp(40000)
-                  .berakningsgrund(BerakningsgrundEntity.LON)
-                  .beloppstyp(BeloppstypEntity.INKOMSTBASERAD)
-                  .ersattningstyp(ErsattningstypEntity.HUNDBIDRAG)
-                  .periodisering(PeriodiseringEntity.DAG)
-                  .omfattning(100)
-                  .beslutsutfall(BeslutsutfallEntity.FU)
-                  .avslagsanledning("")
-                  .produceratResultat(List.of(pre))
-                  .build();
+         ErsattningEntity ersattningEntity = ImmutableErsattningEntity.builder()
+               .id(UUID.randomUUID())
+               .belopp(40000)
+               .berakningsgrund(BerakningsgrundEntity.LON)
+               .beloppstyp(BeloppstypEntity.INKOMSTBASERAD)
+               .ersattningstyp(ErsattningstypEntity.HUNDBIDRAG)
+               .periodisering(PeriodiseringEntity.DAG)
+               .omfattning(100)
+               .beslutsutfall(BeslutsutfallEntity.FU)
+               .avslagsanledning("")
+               .produceratResultat(List.of(pre))
+               .build();
 
-            ersattningar.add(ersattningEntity);
+         ersattningar.add(ersattningEntity);
       }
 
       KundbehovEntity kundbehovEntity = ImmutableKundbehovEntity.builder()
