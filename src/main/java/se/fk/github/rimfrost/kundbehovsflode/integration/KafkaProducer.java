@@ -32,12 +32,13 @@ public class KafkaProducer
       vahEmitter.send(payload);
    }
 
-    @Channel("kundbehovsflode-done")
-    Emitter<KundbehovsflodeDoneMessage> kundbehovsflodeDoneMessageEmitter;
-    public void sendKundbehovsflodeDone(UUID kundbehovsflodeId)
-    {
-        var payload = new KundbehovsflodeDoneMessage();
-        payload.setKundbehovsflodeId(kundbehovsflodeId.toString());
-        kundbehovsflodeDoneMessageEmitter.send(payload);
-    }
+   @Channel("kundbehovsflode-done")
+   Emitter<KundbehovsflodeDoneMessage> kundbehovsflodeDoneMessageEmitter;
+
+   public void sendKundbehovsflodeDone(UUID kundbehovsflodeId)
+   {
+      var payload = new KundbehovsflodeDoneMessage();
+      payload.setKundbehovsflodeId(kundbehovsflodeId.toString());
+      kundbehovsflodeDoneMessageEmitter.send(payload);
+   }
 }
