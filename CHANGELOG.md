@@ -2,6 +2,15 @@
 
 Changelog of rimfrost-service-kundbehovsflode.
 
+## 0.0.2 (2025-12-08)
+
+### Bug Fixes
+
+-  spotless apply ([c2eb8](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/c2eb8621828d0df) Ulf Slunga)  
+-  Stöd för att skicka avslutande Vah flode done message ([65703](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/65703c5504d600c) Ulf Slunga)  
+-  apply spotless ([7597e](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/7597ee256f86c44) David Söderberg)  
+-  add missing ersattning to kundbehov and use correct variable for formanstyp ([cfa49](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/cfa491213ba4a03) David Söderberg)  
+
 ## 0.0.1 (2025-12-04)
 
 ### Features
