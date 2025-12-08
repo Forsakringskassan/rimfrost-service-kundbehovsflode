@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-service-kundbehovsflode.
 
+## 0.0.3 (2025-12-08)
+
+### Bug Fixes
+
+-  missade commits ([67c5a](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/67c5a9d90905e13) Ulf Slunga)  
+
 ## 0.0.2 (2025-12-08)
 
 ### Bug Fixes
