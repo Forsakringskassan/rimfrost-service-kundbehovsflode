@@ -137,7 +137,7 @@ public class KundbehovServiceImpl implements KundbehovService
                .omfattning(100)
                .beslutsutfall(BeslutsutfallEntity.FU)
                .avslagsanledning("")
-               .produceratResultat(List.of(pre))
+               .produceratResultat(pre)
                .build();
 
          ersattningar.add(ersattningEntity);

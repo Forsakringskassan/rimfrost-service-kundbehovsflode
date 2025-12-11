@@ -1,6 +1,5 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.entity;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.immutables.value.Value;
@@ -32,9 +31,5 @@ public interface ErsattningEntity
 
    String avslagsanledning();
 
-   @Value.Default
-   default List<ProduceratResultatEntity> produceratResultat()
-   {
-      return List.of();
-   }
+   ProduceratResultatEntity produceratResultat();
 }

@@ -9,5 +9,5 @@ public interface KundbehovsflodePutRequest
 {
    UUID kundbehovsflodeId();
 
-   KundbehovsflodeDTO kundbehovsflode();
+   UppgiftDTO uppgift();
 }
