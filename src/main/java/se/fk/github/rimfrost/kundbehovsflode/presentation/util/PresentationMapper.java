@@ -349,7 +349,7 @@ public class PresentationMapper
       }
 
       PutKundbehovsflodeResponse response = new PutKundbehovsflodeResponse();
-      response.setKundbehovsflode(toUppgift(kundbehovsflodePutResponse.uppgift()));
+      response.setUppgift(toUppgift(kundbehovsflodePutResponse.uppgift()));
 
       return response;
    }
