@@ -1,10 +1,13 @@
 package se.fk.github.rimfrost.kundbehovsflode.presentation.util;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.InternalServerErrorException;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ErsattningDTO;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.FSSAInformationDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableErsattningDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableIndividDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableKundbehovCreateRequest;
@@ -19,6 +22,8 @@ import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableLagrumDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutablePeriodDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableProduceratResultatDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableRegelDTO;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableUnderlagDTO;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableUppgiftDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ImmutableUppgiftspecifikationDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.IndividDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.KundbehovCreateRequest;
@@ -37,8 +42,12 @@ import se.fk.github.rimfrost.kundbehovsflode.logic.dto.LagrumDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.PeriodDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.ProduceratResultatDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.RegelDTO;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.UnderlagDTO;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.UppgiftDTO;
+import se.fk.github.rimfrost.kundbehovsflode.logic.dto.UppgiftStatusDTO;
 import se.fk.github.rimfrost.kundbehovsflode.logic.dto.UppgiftspecifikationDTO;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Ersattning;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.FSSAinformation;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.GetKundbehovsflodeResponse;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Individ;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Kundbehov;
@@ -55,6 +64,9 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.ProduceratResu
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutKundbehovsflodeRequest;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutKundbehovsflodeResponse;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Regel;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Underlag;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgift;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.UppgiftStatus;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgiftspecifikation;
 
 @ApplicationScoped
@@ -180,11 +192,7 @@ public class PresentationMapper
       ersattning.setOmfattning(ersattningDTO.omfattning());
       ersattning.setBeslutsutfall(enumMapper.toBeslutsutfallEnum(ersattningDTO.beslutsutfall()));
       ersattning.setAvslagsanledning(ersattningDTO.avslagsanledning());
-      ersattning.setProduceratResultat(
-            ersattningDTO.produceratResultat()
-                  .stream()
-                  .map(this::toProduceratResultat)
-                  .toList());
+      ersattning.setProduceratResultat(toProduceratResultat(ersattningDTO.produceratResultat()));
       return ersattning;
    }
 
@@ -266,10 +274,71 @@ public class PresentationMapper
 
       KundbehovsflodePutRequest request = ImmutableKundbehovsflodePutRequest.builder()
             .kundbehovsflodeId(kundbehovsflodeId)
-            .kundbehovsflode(toKundbehovsflodeDTO(putKundbehovsflodeRequest.getKundbehovsflode()))
+            .uppgift(toUppgiftDTO(putKundbehovsflodeRequest.getUppgift()))
             .build();
 
       return request;
+   }
+
+   private UppgiftDTO toUppgiftDTO(Uppgift uppgift)
+   {
+
+      var builder = ImmutableUppgiftDTO.builder()
+            .uppgiftId(uppgift.getId())
+            .utforarId(uppgift.getUtforarId())
+            .skapadTs(uppgift.getSkapadTs())
+            .planeradTs(uppgift.getPlaneradTs())
+            .utfordTs(uppgift.getUtfordTs())
+            .kundbehovsflode(toKundbehovsflodeDTO(uppgift.getKundbehovsflode()))
+            .uppgiftSpecifikation(toUppgiftspecifikationDTO(uppgift.getUppgiftspecifikation()))
+            .version(uppgift.getVersion())
+            .uppgiftStatus(toUppgiftStatus(uppgift.getUppgiftStatus()))
+            .fssaInformation(toFSSAInformation(uppgift.getFsSAinformation()));
+
+      for (var underlag : uppgift.getUnderlag())
+      {
+         builder.addUnderlag(toUnderlagDTO(underlag));
+      }
+      return builder.build();
+   }
+
+   private UnderlagDTO toUnderlagDTO(Underlag underlag)
+   {
+      return ImmutableUnderlagDTO.builder()
+            .typ(underlag.getTyp())
+            .version(underlag.getVersion())
+            .data(underlag.getData())
+            .build();
+   }
+
+   private FSSAInformationDTO toFSSAInformation(FSSAinformation fssaInformation)
+   {
+      switch (fssaInformation)
+      {
+         case HANDLAGGNING_PAGAR:
+            return FSSAInformationDTO.HANDLAGGNING_PAGAR;
+         case VANTAR_PA_INFO_FRAN_ANNAN_PART:
+            return FSSAInformationDTO.VANTAR_PA_INFO_FRAN_ANNAN_PART;
+         case VANTAR_PA_INFO_FRAN_KUND:
+            return FSSAInformationDTO.VANTAR_PA_INFO_FRAN_KUND;
+         default:
+            throw new InternalServerErrorException("Could not map fssaInformation: " + fssaInformation);
+      }
+   }
+
+   private UppgiftStatusDTO toUppgiftStatus(UppgiftStatus uppgiftStatus)
+   {
+      switch (uppgiftStatus)
+      {
+         case PLANERAD:
+            return UppgiftStatusDTO.PLANERAD;
+         case TILLDELAD:
+            return UppgiftStatusDTO.TILLDELAD;
+         case AVSLUTAD:
+            return UppgiftStatusDTO.AVSLUTAD;
+         default:
+            throw new InternalServerErrorException("Could not map UppgiftStatus: " + uppgiftStatus);
+      }
    }
 
    public PutKundbehovsflodeResponse toPutKundbehovsflodeResponse(KundbehovsflodePutResponse kundbehovsflodePutResponse)
@@ -280,9 +349,73 @@ public class PresentationMapper
       }
 
       PutKundbehovsflodeResponse response = new PutKundbehovsflodeResponse();
-      response.setKundbehovsflode(toKundbehovsflode(kundbehovsflodePutResponse.kundbehovsflode()));
+      response.setKundbehovsflode(toUppgift(kundbehovsflodePutResponse.uppgift()));
 
       return response;
+   }
+
+   private Uppgift toUppgift(UppgiftDTO uppgiftDTO)
+   {
+      var uppgift = new Uppgift();
+      uppgift.setId(uppgiftDTO.uppgiftId());
+      uppgift.setVersion(uppgiftDTO.version());
+      uppgift.setKundbehovsflode(toKundbehovsflode(uppgiftDTO.kundbehovsflode()));
+      uppgift.setPlaneradTs(uppgiftDTO.planeradTs());
+      uppgift.setUtfordTs(uppgiftDTO.utfordTs());
+      uppgift.setSkapadTs(uppgiftDTO.skapadTs());
+      uppgift.setUtforarId(uppgiftDTO.utforarId());
+      uppgift.setUppgiftspecifikation(toUppgiftspecifikation(uppgiftDTO.uppgiftSpecifikation()));
+      uppgift.setFsSAinformation(toFSSAInformation(uppgiftDTO.fssaInformation()));
+      uppgift.setUppgiftStatus(toUppgiftStatus(uppgiftDTO.uppgiftStatus()));
+
+      var underlag = new ArrayList<Underlag>();
+      for (var underlagDTO : uppgiftDTO.underlag())
+      {
+         underlag.add(toUnderlag(underlagDTO));
+      }
+      uppgift.setUnderlag(underlag);
+
+      return uppgift;
+   }
+
+   private UppgiftStatus toUppgiftStatus(UppgiftStatusDTO uppgiftStatus)
+   {
+      switch (uppgiftStatus)
+      {
+         case PLANERAD:
+            return UppgiftStatus.PLANERAD;
+         case TILLDELAD:
+            return UppgiftStatus.TILLDELAD;
+         case AVSLUTAD:
+            return UppgiftStatus.AVSLUTAD;
+         default:
+            throw new InternalServerErrorException("Could not map uppgiftStatus: " + uppgiftStatus);
+      }
+   }
+
+   private FSSAinformation toFSSAInformation(FSSAInformationDTO fssaInformation)
+   {
+      switch (fssaInformation)
+      {
+         case HANDLAGGNING_PAGAR:
+            return FSSAinformation.HANDLAGGNING_PAGAR;
+         case VANTAR_PA_INFO_FRAN_ANNAN_PART:
+            return FSSAinformation.VANTAR_PA_INFO_FRAN_ANNAN_PART;
+         case VANTAR_PA_INFO_FRAN_KUND:
+            return FSSAinformation.VANTAR_PA_INFO_FRAN_KUND;
+
+         default:
+            throw new InternalServerErrorException("Could not map fssaInformation: " + fssaInformation);
+      }
+   }
+
+   private Underlag toUnderlag(UnderlagDTO underlagDTO)
+   {
+      var underlag = new Underlag();
+      underlag.setTyp(underlagDTO.typ());
+      underlag.setVersion(underlagDTO.version());
+      underlag.setData(underlagDTO.data());
+      return underlag;
    }
 
    public Kundbehovsflode toKundbehovsflode(KundbehovsflodeDTO kundbehovsflodeDTO)
@@ -589,10 +722,7 @@ public class PresentationMapper
             .omfattning(ersattning.getOmfattning())
             .beslutsutfall(enumMapper.toBeslutsutfallDTO(ersattning.getBeslutsutfall()))
             .avslagsanledning(ersattning.getAvslagsanledning())
-            .produceratResultat(ersattning.getProduceratResultat()
-                  .stream()
-                  .map(this::toProduceratResultatDTO)
-                  .toList())
+            .produceratResultat(toProduceratResultatDTO(ersattning.getProduceratResultat()))
             .build();
    }
 

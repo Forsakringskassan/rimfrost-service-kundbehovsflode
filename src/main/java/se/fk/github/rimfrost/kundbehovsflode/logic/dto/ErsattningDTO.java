@@ -1,6 +1,5 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.dto;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.immutables.value.Value;
@@ -26,9 +25,5 @@ public interface ErsattningDTO
 
    String avslagsanledning();
 
-   @Value.Default
-   default List<ProduceratResultatDTO> produceratResultat()
-   {
-      return List.of();
-   }
+   ProduceratResultatDTO produceratResultat();
 }

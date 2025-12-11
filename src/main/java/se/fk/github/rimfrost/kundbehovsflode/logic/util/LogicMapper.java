@@ -140,10 +140,7 @@ public class LogicMapper
             .omfattning(ersattningEntity.omfattning())
             .beslutsutfall(enumMapper.toBeslutsutfallDTO(ersattningEntity.beslutsutfall()))
             .avslagsanledning(ersattningEntity.avslagsanledning())
-            .produceratResultat(ersattningEntity.produceratResultat()
-                  .stream()
-                  .map(this::toProduceratResultatDTO)
-                  .toList())
+            .produceratResultat(toProduceratResultatDTO(ersattningEntity.produceratResultat()))
             .build();
    }
 
@@ -364,11 +361,7 @@ public class LogicMapper
             .omfattning(ersattningDTO.omfattning())
             .beslutsutfall(enumMapper.toBeslutsutfallEntity(ersattningDTO.beslutsutfall()))
             .avslagsanledning(ersattningDTO.avslagsanledning())
-            .produceratResultat(
-                  ersattningDTO.produceratResultat()
-                        .stream()
-                        .map(this::toProduceratResultatEntity)
-                        .toList())
+            .produceratResultat(toProduceratResultatEntity(ersattningDTO.produceratResultat()))
             .build();
    }
 

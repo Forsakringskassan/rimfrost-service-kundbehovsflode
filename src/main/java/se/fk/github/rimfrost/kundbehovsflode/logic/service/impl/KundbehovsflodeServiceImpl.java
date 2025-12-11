@@ -3,6 +3,9 @@ package se.fk.github.rimfrost.kundbehovsflode.logic.service.impl;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import se.fk.github.rimfrost.kundbehovsflode.integration.KafkaProducer;
@@ -39,6 +42,8 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
 
    @Inject
    private LogicMapper mapper;
+
+   private static final Logger log = LoggerFactory.getLogger(KundbehovsflodeServiceImpl.class);
 
    @Override
    public KundbehovsflodeCreateResponse createKundbehovsflode(KundbehovsflodeCreateRequest request)
@@ -88,8 +93,6 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
          return null;
       }
 
-      // Vet inte riktigt hur man vill hantera detta då kundbehov kommer finnas i kundbehovsflode, måste man hämta ut det eller inte?
-
       KundbehovsflodeGetResponse response = ImmutableKundbehovsflodeGetResponse.builder()
             .kundbehovsflode(mapper.toKundbehovsflodeDTO(kundbehovsflodeEntity))
             .build();
@@ -100,11 +103,11 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
    @Override
    public KundbehovsflodePutResponse putKundbehovsflode(KundbehovsflodePutRequest request)
    {
-      kundbehovsflodeRepository.save(mapper.toKundbehovsflodeEntity(request.kundbehovsflode()));
+      kundbehovsflodeRepository.save(mapper.toKundbehovsflodeEntity(request.uppgift().kundbehovsflode()));
       KundbehovsflodePutResponse response = ImmutableKundbehovsflodePutResponse.builder()
-            .kundbehovsflode(request.kundbehovsflode())
+            .uppgift(request.uppgift())
             .build();
-
+      log.info("KundbehovsflodePutRequest update: {}", request);
       return response;
    }
 
