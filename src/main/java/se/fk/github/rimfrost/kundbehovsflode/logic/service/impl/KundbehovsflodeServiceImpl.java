@@ -43,7 +43,7 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
    @Inject
    private LogicMapper mapper;
 
-   private static final Logger log = LoggerFactory.getLogger(KundbehovsflodeServiceImpl.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(KundbehovsflodeServiceImpl.class);
 
    @Override
    public KundbehovsflodeCreateResponse createKundbehovsflode(KundbehovsflodeCreateRequest request)
@@ -107,7 +107,7 @@ public class KundbehovsflodeServiceImpl implements KundbehovsflodeService
       KundbehovsflodePutResponse response = ImmutableKundbehovsflodePutResponse.builder()
             .uppgift(request.uppgift())
             .build();
-      log.info("KundbehovsflodePutRequest update: {}", request);
+      LOGGER.info("KundbehovsflodePutRequest update: {}", request);
       return response;
    }
 
