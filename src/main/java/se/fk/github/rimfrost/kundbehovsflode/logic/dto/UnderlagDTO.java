@@ -3,8 +3,13 @@ package se.fk.github.rimfrost.kundbehovsflode.logic.dto;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface KundbehovsflodePutResponse
+public interface UnderlagDTO
 {
-   UppgiftDTO uppgift();
+
+   String typ();
+
+   String version();
+
+   String data();
 
 }
