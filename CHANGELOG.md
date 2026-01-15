@@ -2,6 +2,17 @@
 
 Changelog of rimfrost-service-kundbehovsflode.
 
+## 0.1.0 (2026-01-15)
+
+### Features
+
+-  add healthcheck ([7326f](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/7326f573c0f9dbd) Nils Elveros)  
+
+### Bug Fixes
+
+-  caps logger ([d7919](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/d7919ec30d73985) Nils Elveros)  
+-  update to openapi 1.3.2 ([06641](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/06641d8ea09b58e) Nils Elveros)  
+
 ## 0.0.3 (2025-12-08)
 
 ### Bug Fixes
