@@ -1,6 +1,5 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.entity;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.immutables.value.Value;
@@ -12,9 +11,5 @@ public interface RegelEntity
 
    String version();
 
-   @Value.Default
-   default List<LagrumEntity> lagrum()
-   {
-      return List.of();
-   }
+   LagrumEntity lagrum();
 }

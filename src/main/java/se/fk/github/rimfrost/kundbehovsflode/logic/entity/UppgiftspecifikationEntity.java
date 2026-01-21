@@ -1,6 +1,5 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.entity;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.immutables.value.Value;
@@ -26,12 +25,8 @@ public interface UppgiftspecifikationEntity
    String applikationsId();
 
    String applikationsVersion();
-
-   @Value.Default
-   default List<RegelEntity> regel()
-   {
-      return List.of();
-   }
+   
+   RegelEntity regel();
 
    String uppgiftsGui();
 }

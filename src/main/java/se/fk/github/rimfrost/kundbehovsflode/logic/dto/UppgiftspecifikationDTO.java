@@ -1,6 +1,5 @@
 package se.fk.github.rimfrost.kundbehovsflode.logic.dto;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.immutables.value.Value;
@@ -24,11 +23,7 @@ public interface UppgiftspecifikationDTO
 
    String applikationsVersion();
 
-   @Value.Default
-   default List<RegelDTO> regel()
-   {
-      return List.of();
-   }
+   RegelDTO regel();
 
    String uppgiftsGui();
 }
