@@ -25,7 +25,7 @@ public interface UppgiftspecifikationEntity
    String applikationsId();
 
    String applikationsVersion();
-   
+
    RegelEntity regel();
 
    String uppgiftsGui();
