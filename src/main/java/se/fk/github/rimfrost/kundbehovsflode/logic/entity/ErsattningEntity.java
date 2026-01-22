@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.immutables.value.Value;
 
+import jakarta.annotation.Nullable;
 import se.fk.github.rimfrost.kundbehovsflode.logic.enums.BeloppstypEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.enums.BerakningsgrundEntity;
 import se.fk.github.rimfrost.kundbehovsflode.logic.enums.BeslutsutfallEntity;
@@ -29,6 +30,7 @@ public interface ErsattningEntity
 
    BeslutsutfallEntity beslutsutfall();
 
+   @Nullable
    String avslagsanledning();
 
    ProduceratResultatEntity produceratResultat();

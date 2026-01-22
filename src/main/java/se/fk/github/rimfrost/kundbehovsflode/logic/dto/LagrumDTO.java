@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.immutables.value.Value;
 
+import jakarta.annotation.Nullable;
+
 @Value.Immutable
 public interface LagrumDTO
 {
@@ -14,6 +16,7 @@ public interface LagrumDTO
 
    OffsetDateTime giltigFrom();
 
+   @Nullable
    OffsetDateTime giltigTom();
 
    String forfattning();

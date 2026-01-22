@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.immutables.value.Value;
 
+import jakarta.annotation.Nullable;
+
 @Value.Immutable
 public interface ErsattningDTO
 {
@@ -23,6 +25,7 @@ public interface ErsattningDTO
 
    BeslutsutfallDTO beslutsutfall();
 
+   @Nullable
    String avslagsanledning();
 
    ProduceratResultatDTO produceratResultat();

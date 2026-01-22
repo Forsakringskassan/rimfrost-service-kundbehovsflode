@@ -220,11 +220,7 @@ public class LogicMapper
             .roll(enumMapper.toRollDTO(uppgiftspecifikationEntity.roll()))
             .applikationsId(uppgiftspecifikationEntity.applikationsId())
             .applikationsVersion(uppgiftspecifikationEntity.applikationsVersion())
-            .regel(
-                  uppgiftspecifikationEntity.regel()
-                        .stream()
-                        .map(this::toRegelDTO)
-                        .toList())
+            .regel(toRegelDTO(uppgiftspecifikationEntity.regel()))
             .uppgiftsGui(uppgiftspecifikationEntity.uppgiftsGui())
             .build();
 
@@ -241,11 +237,7 @@ public class LogicMapper
       RegelDTO regelDTO = ImmutableRegelDTO.builder()
             .id(regelEntity.id())
             .version(regelEntity.version())
-            .lagrum(
-                  regelEntity.lagrum()
-                        .stream()
-                        .map(this::toLagrumDTO)
-                        .toList())
+            .lagrum(toLagrumDTO(regelEntity.lagrum()))
             .build();
 
       return regelDTO;
@@ -438,11 +430,7 @@ public class LogicMapper
             .roll(enumMapper.toRollEntity(uppgiftspecifikationDTO.roll()))
             .applikationsId(uppgiftspecifikationDTO.applikationsId())
             .applikationsVersion(uppgiftspecifikationDTO.applikationsVersion())
-            .regel(
-                  uppgiftspecifikationDTO.regel()
-                        .stream()
-                        .map(this::toRegelEntity)
-                        .toList())
+            .regel(toRegelEntity(uppgiftspecifikationDTO.regel()))
             .uppgiftsGui(uppgiftspecifikationDTO.uppgiftsGui())
             .build();
    }
@@ -457,11 +445,7 @@ public class LogicMapper
       return ImmutableRegelEntity.builder()
             .id(regelDTO.id())
             .version(regelDTO.version())
-            .lagrum(
-                  regelDTO.lagrum()
-                        .stream()
-                        .map(this::toLagrumEntity)
-                        .toList())
+            .lagrum(toLagrumEntity(regelDTO.lagrum()))
             .build();
    }
 

@@ -474,11 +474,7 @@ public class PresentationMapper
       uppgiftspecifikation.setRoll(enumMapper.toRoll(uppgiftspecifikationDTO.roll()));
       uppgiftspecifikation.setApplikationsId(uppgiftspecifikationDTO.applikationsId());
       uppgiftspecifikation.setApplikationsVersion(uppgiftspecifikationDTO.applikationsVersion());
-      uppgiftspecifikation.setRegel(
-            uppgiftspecifikationDTO.regel()
-                  .stream()
-                  .map(this::toRegel)
-                  .toList());
+      uppgiftspecifikation.setRegel(toRegel(uppgiftspecifikationDTO.regel()));
       uppgiftspecifikation.setUppgiftsGui(uppgiftspecifikationDTO.uppgiftsGui());
 
       return uppgiftspecifikation;
@@ -493,11 +489,7 @@ public class PresentationMapper
       Regel regel = new Regel();
       regel.setId(regelDTO.id());
       regel.setVersion(regelDTO.version());
-      regel.setLagrum(
-            regelDTO.lagrum()
-                  .stream()
-                  .map(this::toLagrum)
-                  .toList());
+      regel.setLagrum(toLagrum(regelDTO.lagrum()));
 
       return regel;
    }
@@ -583,11 +575,7 @@ public class PresentationMapper
             .roll(enumMapper.toRollDTO(uppgiftspecifikation.getRoll()))
             .applikationsId(uppgiftspecifikation.getApplikationsId())
             .applikationsVersion(uppgiftspecifikation.getApplikationsVersion())
-            .regel(
-                  uppgiftspecifikation.getRegel()
-                        .stream()
-                        .map(this::toRegelDTO)
-                        .toList())
+            .regel(toRegelDTO(uppgiftspecifikation.getRegel()))
             .uppgiftsGui(uppgiftspecifikation.getUppgiftsGui())
             .build();
 
@@ -604,11 +592,7 @@ public class PresentationMapper
       RegelDTO regelDTO = ImmutableRegelDTO.builder()
             .id(regel.getId())
             .version(regel.getVersion())
-            .lagrum(
-                  regel.getLagrum()
-                        .stream()
-                        .map(this::toLagrumDTO)
-                        .toList())
+            .lagrum(toLagrumDTO(regel.getLagrum()))
             .build();
 
       return regelDTO;
