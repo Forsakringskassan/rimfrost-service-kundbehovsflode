@@ -2,6 +2,21 @@
 
 Changelog of rimfrost-service-kundbehovsflode.
 
+## 0.2.0 (2026-02-24)
+
+### Features
+
+-  Split put into two operations, patch and put ([7aeaa](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/7aeaa2b215d562e) Lars Persson)  
+-  FKPOC-247 fix lagrum, regel, specifikation for PUT request (#8) ([4400c](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/4400cff6adb88a8) NilsElveros)  
+
+### Other changes
+
+**update openapi version (#10)**
+
+
+[b178f](https://github.com/Forsakringskassan/rimfrost-service-kundbehovsflode/commit/b178f9de1db9ee3) NilsElveros *2026-02-24 07:29:47*
+
+
 ## 0.1.0 (2026-01-15)
 
 ### Features
