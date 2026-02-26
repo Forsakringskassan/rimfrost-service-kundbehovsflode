@@ -3,6 +3,8 @@ package se.fk.github.rimfrost.kundbehovsflode.logic.dto;
 import java.util.UUID;
 import org.immutables.value.Value;
 
+import jakarta.annotation.Nullable;
+
 @Value.Immutable
 public interface UpdateErsattningDTO
 {
@@ -10,5 +12,6 @@ public interface UpdateErsattningDTO
 
    BeslutsutfallDTO beslutsutfall();
 
+   @Nullable
    String avslagsanledning();
 }
