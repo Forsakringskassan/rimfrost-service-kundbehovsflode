@@ -9,7 +9,7 @@
   </parent>
 
   <groupId>se.fk.github.rimfrost</groupId>
-  <artifactId>rimfrost-service-yrkande</artifactId>
+  <artifactId>rimfrost-service-handlaggning</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
   <properties>
